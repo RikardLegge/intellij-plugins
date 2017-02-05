@@ -112,4 +112,4 @@ registerAction("Test Last", "shift meta R") { AnActionEvent event ->
     testRunner.repeatLastTest()
 }
 
-if (!isIdeStartup) show("Loaded 'runTestsAction'<br/>Use [ctrl, shift]+meta+R to")
+if (!isIdeStartup) show("Loaded 'runTestsAction'<br/>Use [ctrl, shift]+meta+R")

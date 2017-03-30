@@ -78,9 +78,9 @@ class Split {
 }
 
 registerAction("Balance Splits", "ctrl W, B") { AnActionEvent event ->
-    def editorManager = FileEditorManagerEx.getInstanceEx(project)
-    def panel = (JPanel) editorManager.splitters.components.first()
-    def balance = new BalanceSplitters(panel)
+    def editorManager = FileEditorManagerEx.getInstanceEx(event.project)
+    JPanel panel = editorManager.splitters.components.first() as JPanel
+    BalanceSplitters balance = new BalanceSplitters(panel)
 
     balance.execute()
 }

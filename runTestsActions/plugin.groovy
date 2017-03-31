@@ -1,6 +1,7 @@
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.openapi.project.Project
+import liveplugin.implementation.ToolWindows
 import org.codehaus.groovy.tools.shell.Shell
 import org.codehaus.groovy.tools.shell.ShellRunner
 
@@ -73,7 +74,7 @@ class TestRunner {
         def lineNumber = currentEditorIn(project).caretModel.logicalPosition.line
 
         def test = new Test(fileName, new FileTestBuilder(fileName, filePath, projectRoot, lineNumber))
-        runCommand(test)
+        runCommand(test, project)
     }
 
     void testFilesOfType(String type) {
@@ -81,7 +82,7 @@ class TestRunner {
         runCommand(test)
     }
 
-    void runCommand(Test test) {
+    void runCommand(Test test, Project project) {
         lastCommand = test
 
         def command = test.command
@@ -90,6 +91,9 @@ class TestRunner {
         
         def focusCommand = test.focusCommand
         execute(focusCommand)
+
+        def toolwindow = ToolWindows.findToolWindow('Terminal', project)
+        toolwindow.show(null)
     }
 
     void repeatLastTest() {

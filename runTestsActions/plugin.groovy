@@ -57,6 +57,10 @@ class Test {
 
         return "${prefix} ${testCommand} ${postfix}"
     }
+
+    String getFocusCommand() {
+        return "${commandWrapper} select-window -t test"
+    }
 }
 
 class TestRunner {
@@ -83,6 +87,9 @@ class TestRunner {
         def command = test.command
         show("Testing ${test.description}")
         execute(command)
+        
+        def focusCommand = test.focusCommand
+        execute(focusCommand)
     }
 
     void repeatLastTest() {

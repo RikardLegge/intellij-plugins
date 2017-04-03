@@ -77,9 +77,9 @@ class TestRunner {
         runCommand(test, project)
     }
 
-    void testFilesOfType(String type) {
+    void testFilesOfType(String type, Project project) {
         def test = new Test(type, new TypeTestBuilder(type))
-        runCommand(test)
+        runCommand(test, project)
     }
 
     void runCommand(Test test, Project project) {
@@ -96,9 +96,9 @@ class TestRunner {
         toolwindow.show(null)
     }
 
-    void repeatLastTest() {
+    void repeatLastTest(Project project) {
         if(lastCommand) {
-            runCommand(lastCommand)
+            runCommand(lastCommand, project)
         } else {
             show "No command has been run before"
         }
@@ -108,11 +108,11 @@ class TestRunner {
 def testRunner = new TestRunner()
 
 registerAction("Test PHP files", { AnActionEvent event ->
-    testRunner.testFilesOfType("PHP")
+    testRunner.testFilesOfType("PHP", event.project)
 })
 
 registerAction("Test Javascript files", { AnActionEvent event ->
-    testRunner.testFilesOfType("JS")
+    testRunner.testFilesOfType("JS", event.project)
 })
 
 registerAction("Test current context", "ctrl meta R") { AnActionEvent event ->
@@ -120,7 +120,7 @@ registerAction("Test current context", "ctrl meta R") { AnActionEvent event ->
 }
 
 registerAction("Test Last", "shift meta R") { AnActionEvent event ->
-    testRunner.repeatLastTest()
+    testRunner.repeatLastTest(event.project)
 }
 
 if (!isIdeStartup) show("Loaded 'runTestsAction'<br/>Use [ctrl, shift]+meta+R")
